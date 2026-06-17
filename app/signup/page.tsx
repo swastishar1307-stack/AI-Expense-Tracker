@@ -2,14 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useTheme } from "./ThemeContext";
+import { useTheme } from "../ThemeContext";
 
-export default function Home() {
+export default function Signup() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { isDark, setIsDark } = useTheme();
 
-  const handleLogin = () => {
+  const handleSignup = () => {
+    console.log("Name:", name);
     console.log("Email:", email);
     console.log("Password:", password);
   };
@@ -26,7 +28,7 @@ export default function Home() {
   const btnText = isDark ? "text-[#eeedfe]" : "text-[#3c3489]";
 
   return (
-    <div className={`flex min-h-screen items-center justify-center ${bgPage} transition-colors duration-300`}>
+     <div className={`flex min-h-screen items-center justify-center ${bgPage} transition-colors duration-300`}>
       
       <div className={`fixed top-6 right-6 flex items-center rounded-full p-1 gap-1 ${cardBg} border ${cardBorder}`}>
   <button
@@ -53,8 +55,16 @@ export default function Home() {
           NOXTRACK
         </h1>
         <p className={`text-center mb-6 ${subColor}`}>
-          AI Expense Tracker
+          Create your account
         </p>
+
+        <input
+          type="text"
+          placeholder="Full Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className={`w-full mb-4 rounded-lg ${inputBg} border ${inputBorder} px-4 py-3 ${inputText} outline-none`}
+        />
 
         <input
           type="email"
@@ -73,18 +83,17 @@ export default function Home() {
         />
 
         <button
-          onClick={handleLogin}
+          onClick={handleSignup}
           className={`w-full rounded-lg ${btnBg} ${btnText} py-3 font-semibold transition`}
         >
-          Login
+          Sign Up
         </button>
 
         <p className={`text-center text-sm mt-4 ${subColor}`}>
-          Don&apos;t have an account?{" "}
-<Link href="/signup" className="underline">Sign up</Link>
+      Already have an account?{" "}
+     <Link href="/" className="underline">Login</Link>
         </p>
-
       </div>
-    </div>
+      </div>
   );
 }
