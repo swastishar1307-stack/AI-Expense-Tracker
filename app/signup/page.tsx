@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useTheme } from "../ThemeContext";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -10,11 +11,14 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const { isDark, setIsDark } = useTheme();
 
+  const router = useRouter();
+
   const handleSignup = () => {
-    console.log("Name:", name);
-    console.log("Email:", email);
-    console.log("Password:", password);
-  };
+  console.log("Name:", name);
+  console.log("Email:", email);
+  console.log("Password:", password);
+  router.push("/dashboard");
+ };
 
   const bgPage = isDark ? "bg-[#15131f]" : "bg-[#f3f4f8]";
   const cardBg = isDark ? "bg-[#1f1c2e]" : "bg-[#f0eefb]";

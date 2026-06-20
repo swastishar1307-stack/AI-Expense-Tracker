@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useTheme } from "./ThemeContext";
 
 export default function Home() {
@@ -9,10 +10,13 @@ export default function Home() {
   const [password, setPassword] = useState("");
   const { isDark, setIsDark } = useTheme();
 
+ const router = useRouter();
+
   const handleLogin = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
-  };
+  console.log("Email:", email);
+  console.log("Password:", password);
+  router.push("/dashboard");
+ };
 
   const bgPage = isDark ? "bg-[#15131f]" : "bg-[#f3f4f8]";
   const cardBg = isDark ? "bg-[#1f1c2e]" : "bg-[#f0eefb]";
