@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useTheme } from "../ThemeContext";
 
 export default function Dashboard() {
@@ -23,37 +24,45 @@ export default function Dashboard() {
   const titleColor = isDark ? "text-white" : "text-[#3c3489]";
   const subColor = isDark ? "text-[#7f77dd]" : "text-[#534ab7]";
   const btnBg = isDark ? "bg-[#7f77dd]" : "bg-[#cecbf6]";
+  const btnText = isDark ? "text-[#eeedfe]" : "text-[#3c3489]";
 
   return (
     <div className={`min-h-screen ${bgPage} transition-colors duration-300 px-4 py-6 sm:px-6`}>
 
-      {/* Header row — title + toggle side by side, no overlap */}
-      <div className="flex items-center justify-between mb-6">
-        <h1 className={`text-xl sm:text-2xl font-bold ${titleColor}`}>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className={`text-2xl font-bold ${titleColor}`}>
           Dashboard
         </h1>
 
-        <div className={`flex items-center rounded-full p-1 gap-1 ${cardBg} border ${cardBorder}`}>
-          <button
-            onClick={() => setIsDark(true)}
-            className={`w-9 h-9 rounded-full flex items-center justify-center text-base transition-colors ${
-              isDark ? btnBg : "opacity-40"
-            }`}
+        <div className="flex items-center gap-3">
+          <Link
+            href="/add-expense"
+            className={`rounded-lg ${btnBg} ${btnText} px-4 py-2 text-sm font-semibold`}
           >
-            🌙
-          </button>
-          <button
-            onClick={() => setIsDark(false)}
-            className={`w-9 h-9 rounded-full flex items-center justify-center text-base transition-colors ${
-              !isDark ? btnBg : "opacity-40"
-            }`}
-          >
-            ☀️
-          </button>
+            + Add Expense
+          </Link>
+
+          <div className={`flex items-center rounded-full p-1 gap-1 ${cardBg} border ${cardBorder}`}>
+            <button
+              onClick={() => setIsDark(true)}
+              className={`w-9 h-9 rounded-full flex items-center justify-center text-base transition-colors ${
+                isDark ? btnBg : "opacity-40"
+              }`}
+            >
+              🌙
+            </button>
+            <button
+              onClick={() => setIsDark(false)}
+              className={`w-9 h-9 rounded-full flex items-center justify-center text-base transition-colors ${
+                !isDark ? btnBg : "opacity-40"
+              }`}
+            >
+              ☀️
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Summary cards */}
       <div className="grid grid-cols-2 gap-3 mb-6">
 
         <div className={`rounded-2xl ${cardBg} border ${cardBorder} p-4 sm:p-6`}>
@@ -68,7 +77,6 @@ export default function Dashboard() {
 
       </div>
 
-      {/* Recent transactions */}
       <div className={`rounded-2xl ${cardBg} border ${cardBorder} p-4 sm:p-6`}>
         <h2 className={`text-base sm:text-lg font-semibold mb-4 ${titleColor}`}>
           Recent Transactions
