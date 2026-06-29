@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "../ThemeContext";
+import { addExpense } from "@/app/lib/expenses";
 
 export default function AddExpense() {
   const { isDark, setIsDark } = useTheme();
@@ -17,17 +18,22 @@ export default function AddExpense() {
 
   const categories = ["Food", "Travel", "Shopping", "Recharge", "Entertainment", "College"];
 
-  const handleAddExpense = () => {
-    setLoading(true);
-    console.log("Title:", title);
-    console.log("Amount:", amount);
-    console.log("Category:", category);
-    console.log("Date:", date);
-    console.log("Note:", note);
-    setTimeout(() => {
-      router.push("/dashboard");
-    }, 1000);
-  };
+  const handleAddExpense = async () => {
+  setLoading(true);
+  const { error } = await addExpense({
+    title,
+    amount: Number(amount),
+    category,
+    date,
+    note,
+  });
+  if (error) {
+    alert("Failed to add expense: " + error.message);
+    setLoading(false);
+    return;
+  }
+  router.push("/dashboard");
+};
 
   const bgPage = isDark ? "bg-[#15131f]" : "bg-[#f3f4f8]";
   const cardBg = isDark ? "bg-[#1f1c2e]" : "bg-[#f0eefb]";

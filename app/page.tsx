@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTheme } from "./ThemeContext";
+import { signIn } from "@/app/lib/auth";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -12,14 +13,16 @@ export default function Home() {
   const { isDark, setIsDark } = useTheme();
   const router = useRouter();
 
-  const handleLogin = () => {
-    setLoading(true);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    setTimeout(() => {
-      router.push("/dashboard");
-    }, 1000);
-  };
+  const handleLogin = async () => {
+  setLoading(true);
+  try {
+    await signIn(email, password);
+    router.push("/dashboard");
+  } catch (error: any) {
+    alert("Login failed: " + error.message);
+    setLoading(false);
+  }
+};
 
   const bgPage = isDark ? "bg-[#15131f]" : "bg-[#f3f4f8]";
   const cardBg = isDark ? "bg-[#1f1c2e]" : "bg-[#f0eefb]";
